@@ -21,12 +21,13 @@ ui <- bslib::page_fluid(
     sidebarPanel(
       stage_type <- selectInput("stage_type_input", "Venue Type", 
                   choices = c("Broadway", "Off-Broadway", "Off-Off-Broadway")),
-      hr(),
-      helpText("Type of stage on which the musical was performed")
+      helpText("Type of venue in which the musical was performed"),
+      hr()
     ),
     
     mainPanel(
-      chat_ui("chat", height = "500px", width = "100%")
+      chat_ui("chat", height = "500px", width = "100%"),
+      helpText("Describe the musical that you're interested in."),
     )
   )
 )
@@ -34,8 +35,16 @@ ui <- bslib::page_fluid(
 server <- function(input, output, session) {
   chat <- chat_openai(
     model = "gpt-4o",
-    system_prompt = paste("Find ", stage_type,
-                          " musicals that include return the one mmost relevant related to the topic, the one that's least relevant to the topic, and one that has nothing to do with the topc (relevancy score of 0). Only return a one or two-line description and percentage relevance. Display each musical in three liness: 1. Name on line one in bold and italics and no quotes; 2. on the next two, relevancy description in bold and and relvancy score in bold; and 3. on the line three, the description in plain text. Only includes the values, not the fields names."
+    system_prompt = paste("Find only ", stage_type, "musicals. Exclude any that were never performed on ", stage_type, ". ",
+                          "Extract the musical most relevant to the topic, the one that's least relevant--but still relevant--to the topic, and one that has nothing to do with the topic (relevancy score of 0). ",
+                          "Also capture when and where the musical was first performed. ",
+                          "Only return a one or two-line description, and percentage relevance as the score. ",
+                          "Display each musical in four lines. ",
+                          "On line one, show the name in bold and italics, and without quotes. Then show the year and location in parenstheses and plain text. Then a line break. ",
+                          "On line two, show relevancy description in bold and and the relvancy score in bold. Then a line break. ",
+                          "On line three, show the description in plain text. ",
+                          "On line four, show the year the musical was first performed in parentheses. ",
+                          "Only show the field values (e.g. most relevant), not the field types (e.g. recency score)."
                           ),
   )
   
