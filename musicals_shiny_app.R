@@ -38,9 +38,10 @@ ui <- bslib::page_fluid(
 server <- function(input, output, session) {
   chat <- chat_openai(
     model = "gpt-4o",
-    system_prompt = paste("Select musicals, but only those that were performed ", stage_type, ". ", 
+    system_prompt = paste("Only talk about musicals. ",
+                          "Select musicals, but only those that were performed ", stage_type, ". ", 
                           "Extract the most relevant ", stage_type, " musical with a relevancy score of 100, ",
-                          "the one that's least relevant but is still relevant to the topic, ",
+                          "the one that has the lowest relevancy score but is still related to the topic, ",
                           "and one that has nothing to do with the topic (relevancy score of 0). ",
                           "Display each musical in four lines: ",
                           "On line one, show the name in bold and italics, and without quotes. Then show the year in parenstheses and plain text. ",
