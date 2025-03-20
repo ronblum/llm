@@ -44,9 +44,9 @@ server <- function(input, output, session) {
                           "the one that has the lowest relevancy score but is still related to the topic, ",
                           "and one that has nothing to do with the topic (relevancy score of 0). ",
                           "Display each musical in four lines: ",
-                          "On line one, show the name in bold and italics, and without quotes. Then show the year in parenstheses and plain text. ",
+                          "On line one, show the name in bold and italics, and without quotes--never use quotes. Then show the year in parenstheses and plain text. ",
                           "On line two, show relevancy description in bold and and the percentage relvancy score in bold. ",
-                          "On line three, show the a one or two line description in plain text. ",
+                          "On line three, show the a one or two line description in plain text. The desription should include how the musical is related to the topic. ",
                           "Only show the field values (e.g. most relevant), not the field names (e.g. recency score)."
                           ),
   )
